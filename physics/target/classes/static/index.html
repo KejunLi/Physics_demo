@@ -3,72 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kejun Physics Demo - Login</title>
+    <title>Harmonic Oscillator Animation</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
+        canvas {
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Kejun's Physics Demo</h1>
-    <h2>Login</h2>
-    <form>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
-</div>
+<canvas id="canvas" width="600" height="300"></canvas>
+
+<script>
+    // Get canvas element and context
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    // Constants
+    var k = 1.0; // spring constant
+    var m = 1.0; // mass
+    var omega = Math.sqrt(k / m); // angular frequency
+    var dt = 0.05; // time step
+    var t_max = 10.0; // maximum time
+
+    // Initial conditions
+    var x0 = 1.0; // initial position
+    var v0 = 0.0; // initial velocity
+
+    // Function to calculate position at time t
+    function position(t) {
+        return x0 * Math.cos(omega * t) + (v0 / omega) * Math.sin(omega * t);
+    }
+
+    // Animation function
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate position at current time
+        var t = Date.now() / 1000; // convert milliseconds to seconds
+        var x = position(t);
+
+        // Draw oscillator
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2 + x * 50, canvas.height / 2, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+
+        // Request next frame
+        requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    animate();
+</script>
 </body>
 </html>

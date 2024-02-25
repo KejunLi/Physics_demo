@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonic Oscillator Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="300"></canvas>
+
+<script>
+    // Get canvas element and context
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    // Constants
+    var k = 1.0; // spring constant
+    var m = 1.0; // mass
+    var omega = Math.sqrt(k / m); // angular frequency
+    var dt = 0.05; // time step
+    var t_max = 10.0; // maximum time
+
+    // Initial conditions
+    var x0 = 1.0; // initial position
+    var v0 = 0.0; // initial velocity
+
+    // Function to calculate position at time t
+    function position(t) {
+        return x0 * Math.cos(omega * t) + (v0 / omega) * Math.sin(omega * t);
+    }
+
+    // Animation function
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate position at current time
+        var t = Date.now() / 1000; // convert milliseconds to seconds
+        var x = position(t);
+
+        // Draw oscillator
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2 + x * 50, canvas.height / 2, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+
+        // Request next frame
+        requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    animate();
+</script>
+</body>
+</html>
