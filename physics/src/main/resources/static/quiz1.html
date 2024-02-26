@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Physics Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,111 +11,113 @@
         .question {
             margin-bottom: 20px;
         }
-        .option {
-            margin-bottom: 10px;
+        .options {
+            margin-left: 20px;
         }
     </style>
 </head>
 <body>
-<h1>Quiz</h1>
-<form action="submit_quiz.php" method="post">
-    <div class="question">
-        <p>Question 1: What is the capital of France?</p>
-        <div class="option">
-            <input type="radio" id="q1_option_a" name="q1" value="A">
-            <label for="q1_option_a">A. Paris</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_b" name="q1" value="B">
-            <label for="q1_option_b">B. Rome</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_c" name="q1" value="C">
-            <label for="q1_option_c">C. Berlin</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_d" name="q1" value="D">
-            <label for="q1_option_d">D. London</label>
-        </div>
-    </div>
-    <div class="question">
-        <p>Question 1: What is the capital of France?</p>
-        <div class="option">
-            <input type="radio" id="q1_option_a" name="q1" value="A">
-            <label for="q1_option_a">A. Paris</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_b" name="q1" value="B">
-            <label for="q1_option_b">B. Rome</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_c" name="q1" value="C">
-            <label for="q1_option_c">C. Berlin</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_d" name="q1" value="D">
-            <label for="q1_option_d">D. London</label>
-        </div>
-    </div>
-    <div class="question">
-        <p>Question 1: What is the capital of France?</p>
-        <div class="option">
-            <input type="radio" id="q1_option_a" name="q1" value="A">
-            <label for="q1_option_a">A. Paris</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_b" name="q1" value="B">
-            <label for="q1_option_b">B. Rome</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_c" name="q1" value="C">
-            <label for="q1_option_c">C. Berlin</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_d" name="q1" value="D">
-            <label for="q1_option_d">D. London</label>
-        </div>
-    </div>
-    <div class="question">
-        <p>Question 1: What is the capital of France?</p>
-        <div class="option">
-            <input type="radio" id="q1_option_a" name="q1" value="A">
-            <label for="q1_option_a">A. Paris</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_b" name="q1" value="B">
-            <label for="q1_option_b">B. Rome</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_c" name="q1" value="C">
-            <label for="q1_option_c">C. Berlin</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_d" name="q1" value="D">
-            <label for="q1_option_d">D. London</label>
-        </div>
-    </div>
-    <div class="question">
-        <p>Question 1: What is the capital of France?</p>
-        <div class="option">
-            <input type="radio" id="q1_option_a" name="q1" value="A">
-            <label for="q1_option_a">A. Paris</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_b" name="q1" value="B">
-            <label for="q1_option_b">B. Rome</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_c" name="q1" value="C">
-            <label for="q1_option_c">C. Berlin</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="q1_option_d" name="q1" value="D">
-            <label for="q1_option_d">D. London</label>
-        </div>
-    </div>
+<h1>Physics Quiz</h1>
 
-    <input type="submit" value="Submit">
-</form>
+<div class="question">
+    <p>1. What is the SI unit of force?</p>
+    <div class="options">
+        <input type="radio" id="q1-a" name="q1" value="A">
+        <label for="q1-a">A) Newton</label><br>
+        <input type="radio" id="q1-b" name="q1" value="B">
+        <label for="q1-b">B) Watt</label><br>
+        <input type="radio" id="q1-c" name="q1" value="C">
+        <label for="q1-c">C) Joule</label><br>
+        <input type="radio" id="q1-d" name="q1" value="D">
+        <label for="q1-d">D) Kilogram</label><br>
+    </div>
+</div>
+
+<div class="question">
+    <p>2. What is the formula for calculating velocity?</p>
+    <div class="options">
+        <input type="radio" id="q2-a" name="q2" value="A">
+        <label for="q2-a">A) v = at</label><br>
+        <input type="radio" id="q2-b" name="q2" value="B">
+        <label for="q2-b">B) v = s/t</label><br>
+        <input type="radio" id="q2-c" name="q2" value="C">
+        <label for="q2-c">C) v = s * t</label><br>
+        <input type="radio" id="q2-d" name="q2" value="D">
+        <label for="q2-d">D) v = s + t</label><br>
+    </div>
+</div>
+
+<div class="question">
+    <p>3. Which of the following is a vector quantity?</p>
+    <div class="options">
+        <input type="radio" id="q3-a" name="q3" value="A">
+        <label for="q3-a">A) Mass</label><br>
+        <input type="radio" id="q3-b" name="q3" value="B">
+        <label for="q3-b">B) Density</label><br>
+        <input type="radio" id="q3-c" name="q3" value="C">
+        <label for="q3-c">C) Speed</label><br>
+        <input type="radio" id="q3-d" name="q3" value="D">
+        <label for="q3-d">D) Velocity</label><br>
+    </div>
+</div>
+
+<div class="question">
+    <p>4. What is the SI unit of energy?</p>
+    <div class="options">
+        <input type="radio" id="q4-a" name="q4" value="A">
+        <label for="q4-a">A) Volt</label><br>
+        <input type="radio" id="q4-b" name="q4" value="B">
+        <label for="q4-b">B) Joule</label><br>
+        <input type="radio" id="q4-c" name="q4" value="C">
+        <label for="q4-c">C) Watt</label><br>
+        <input type="radio" id="q4-d" name="q4" value="D">
+        <label for="q4-d">D) Ohm</label><br>
+    </div>
+</div>
+
+<div class="question">
+    <p>5. What is the formula for calculating work?</p>
+    <div class="options">
+        <input type="radio" id="q5-a" name="q5" value="A">
+        <label for="q5-a">A) W = F / t</label><br>
+        <input type="radio" id="q5-b" name="q5" value="B">
+        <label for="q5-b">B) W = F * d</label><br>
+        <input type="radio" id="q5-c" name="q5" value="C">
+        <label for="q5-c">C) W = F + d</label><br>
+        <input type="radio" id="q5-d" name="q5" value="D">
+        <label for="q5-d">D) W = F * t</label><br>
+    </div>
+</div>
+
+<button onclick="submitQuiz()">Submit</button>
+
+<script>
+    function submitQuiz() {
+    // Initialize variables to keep track of user's score and correct answers
+    let score = 0;
+    const correctAnswers = ['A', 'B', 'D', 'B', 'B']; // Replace with correct answers for each question
+
+    // Loop through each question
+    for (let i = 1; i <= 5; i++) {
+        // Get the user's selected answer for the current question
+        const selectedAnswer = document.querySelector(`input[name=q${i}]:checked`);
+
+        // If the user has selected an answer
+        if (selectedAnswer) {
+            // Get the value of the selected answer (A, B, C, or D)
+            const userAnswer = selectedAnswer.value;
+
+            // Check if the user's answer is correct
+            if (userAnswer === correctAnswers[i - 1]) {
+                // Increment the score if the answer is correct
+                score++;
+            }
+        }
+    }
+
+    // Display the user's score
+    alert(`Your score: ${score} out of 5`);
+}
+</script>
 </body>
 </html>
