@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <!-- Include Bootstrap CSS (you may need to download and host it locally or use a CDN) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        #registrationForm {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="registrationForm">
+        <h1>Register Account</h1>
+        <form id="userRegistrationForm" onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS (you may need to download and host it locally or use a CDN) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Prevent the form from actually submitting (for this example)
+
+            // Replace this with your actual backend communication (Spring Boot)
+            // Here, we'll just show an alert to indicate the registration attempt
+            //alert('Attempting to register...');
+
+            // Get the password and confirm password values
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Check if the passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please enter matching passwords.');
+                return;
+            }
+
+            // Simulate a backend response (replace this with actual backend logic)
+            const isUCSCStudent = false; // Replace with your backend logic to check if the user is a UCSC student
+
+            // Show an alert based on the backend response
+            if (!isUCSCStudent) {
+                alert('This is not a valid UCSC email so you do not have access to this website.');
+            } else {
+                alert('This is not a valid UCSC email so you do not have access to this website.');
+                //alert('Registration successful!');
+            }
+        }
+    </script>
+</body>
+</html>
+
