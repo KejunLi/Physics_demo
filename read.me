@@ -14,3 +14,10 @@ database is saved as a file under ./database
 Deploy
 serving the web app on github: https://pages.github.com/
 must un-deploy and re-deploy for new changes to go online
+
+Expose a local server to the internet https://ngrok.com/download
+run the local application (jar file)
+run "ngrok http http://localhost:8080"
+go to https://dashboard.ngrok.com/cloud-edge/endpoints to find the app
+create a domain name: luckily-integral-kingfish.ngrok-free.app
+go to "edges" start a tunnel from command line "ngrok tunnel --label edge=edghts_2csuB1GWCaiNjjKHLILeVxJJ0Qi http://localhost:8080"
