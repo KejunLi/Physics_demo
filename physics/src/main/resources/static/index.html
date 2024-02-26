@@ -95,7 +95,7 @@
     <!-- Login section -->
     <div class="login-form">
         <h2>Log in to take quiz</h2>
-        <form action="/login" method="post">
+        <form id="loginForm" form action="/login" method="post">
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
             <input type="submit" value="Login">
@@ -138,4 +138,30 @@
 </div>
 
 </body>
+
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get the form data
+        const formData = new FormData(this);
+
+        // Send a POST request to the server
+        fetch("/login", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                // If the response status is not OK, display an alert
+                throw new Error("You are visiting this site outside of class hours. Please check back during class hours for access.");
+            }
+        })
+        .catch(error => {
+            // Display an alert with the error message
+            alert("You are visiting this site outside of class hours. Please check back during class hours for access.");
+        });
+    });
+</script>
 </html>
