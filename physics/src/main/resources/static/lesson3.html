@@ -13,7 +13,7 @@
             background-color: #f8f9fa;
         }
 
-        #kinematicsTable {
+         #introduction, #canvas-container {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
@@ -54,6 +54,10 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        #canvas-container {
+            text-align: center; /* Center align content */
+        }
+
     </style>
 </head>
 <body>
@@ -78,7 +82,10 @@
     </div>
 
 
-<canvas id="canvas" width="600" height="600"></canvas>
+<!--<canvas id="canvas" width="600" height="600"></canvas>-->
+    <div id="canvas-container">
+        <canvas id="canvas" width="600" height="600"></canvas>
+    </div>
 
 <script>
     // Get canvas element and context
