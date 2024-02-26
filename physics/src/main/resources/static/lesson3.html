@@ -2,9 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonic Oscillator Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
+    <div id="introduction">
+        <h1>Harmonic Oscillator</h1>
+        <p>
+            The harmonic oscillator is a fundamental concept in physics, describing the repetitive motion
+            of a system around an equilibrium position. It is characterized by a restoring force proportional
+            to the displacement from equilibrium. One classic example is the simple pendulum.
+        </p>
+        <p>
+            The equation for the angular displacement (\( \theta \)) of a harmonic oscillator, such as a pendulum,
+            with amplitude (\( A \)), acceleration due to gravity (\( g \)), length of the pendulum (\( l \)),
+            and time (\( t \)) is given by:
+        </p>
+        <p style="font-family: 'Courier New', monospace;">
+            \( \theta(t) = A \cdot \cos\left(\sqrt{\frac{g}{l}} \cdot t\right) \)
+        </p>
+        <p>
+            In this equation, \( \theta(t) \) represents the angular displacement at time \( t \).
+        </p>
+    </div>
+
+
+<canvas id="canvas" width="600" height="600"></canvas>
+
+<script>
+    // Get canvas element and context
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    // Constants
+    var g = 9.8; // gravity
+    var l = 0.5; // length, m
+    var amp = 20.0; // amplitude, degrees
+    var omega = Math.sqrt(g / l); // angular frequency
+    var dt = 0.05; // time step
+    var t_max = 10.0; // maximum time
+
+    var x_pivot = canvas.width / 2;
+    var y_pivot = canvas.height * 1 / 10;
+
+
+    // Function to calculate position at time t
+    function theta(t) {
+        return amp * Math.cos(omega * t);
+    }
+
+    // Animation function
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate position at current time
+        var t = Date.now() / 1000; // convert milliseconds to seconds
+        var x = l*Math.sin(theta(t)*Math.PI/180);
+        var y = l*(1-Math.cos(theta(t)*Math.PI/180));
+
+        // Draw pivot
+        ctx.arc(x_pivot, y_pivot, 5, 0, 2*Math.PI);
+        ctx.fill();
+
+        // Draw oscillator
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2 + x*400, canvas.height*9/10 - y*400, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+
+        // Set line properties (optional)
+        ctx.strokeStyle = '#000000'; // Line color
+        ctx.lineWidth = 2; // Line width
+
+        // Draw the line
+        ctx.beginPath();
+        ctx.moveTo(x_pivot, y_pivot); // Move to the starting point
+        ctx.lineTo(canvas.width / 2 + x*400, canvas.height*9/10 - y*400); // Draw a line to the ending point
+        ctx.stroke(); // Apply the stroke to actually draw the line
+        ctx.closePath();
+
+        // Request next frame
+        requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    animate();
+
+</script>
 
 </body>
 </html>
