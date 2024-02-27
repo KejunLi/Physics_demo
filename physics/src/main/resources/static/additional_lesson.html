@@ -1,10 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Distorted Potential Energy Surface</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
 
+        body {
+            background-color: #f8f9fa;
+        }
+
+        #introduction,
+        #canvas-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #canvas-container {
+            text-align: center;
+            /* Center align content */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="introduction">
+        <h1>Potential Energy Surface</h1>
+        <p>
+        In physics, the potential energy surface (PES) plays a crucial role in the analysis of lattice vibrations, particularly in the study of condensed matter and materials science. The potential energy surface represents the potential energy of a system as a function of its atomic coordinates, providing a comprehensive map that describes the energy landscape of a material. In the context of lattice vibrations, the PES characterizes the interactions between atoms within a crystal lattice, outlining the energy variations associated with vibrational modes. Understanding the PES allows researchers to explore the equilibrium positions of atoms, identify stable structures, and investigate the dynamics of lattice vibrations. This analysis is fundamental for gaining insights into thermal properties, phonon dispersion, and the overall stability of materials, contributing to advancements in areas such as thermoelectrics, superconductivity, and materials design for various technological applications.
+        </p>
+    </div>
+    <div id="plot"></div>
+
+    <script>
+        // Constants
+        var K = 30; // elastic vibronic constant
+        var F = 5; // linear vibronic constant
+        var G = 10; // quadratic vibronic constant
+
+        // Create xy mesh for 3D plot
+        function createXYMesh(rows, cols, xRange, yRange) {
+            const xyMesh = [];
+            const deltaX = (xRange[1] - xRange[0]) / (cols - 1);
+            const deltaY = (yRange[1] - yRange[0]) / (rows - 1);
+
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < cols; j++) {
+                    const x = xRange[0] + j * deltaX;
+                    const y = yRange[0] + i * deltaY;
+                    row.push([x, y]);
+                }
+                xyMesh.push(row);
+            }
+
+            return xyMesh;
+        }
+
+        // Assuming you want x and y values ranging from -5 to 5
+        const xRange = [-5, 5];
+        const yRange = [-5, 5];
+
+        const rows = 30;
+        const cols = 30;
+
+        const xyMesh = createXYMesh(rows, cols, xRange, yRange);
+
+        // Create data for a 3D surface plot
+        const data = [{
+            type: 'surface',
+            z: generate_surface(xyMesh, K, F, G),
+            colorscale: 'Viridis'
+        }];
+
+        // Set layout options
+        const layout = {
+            scene: {
+                camera: {
+                    eye: {
+                        x: 1.87,
+                        y: 0.88,
+                        z: -0.64
+                    }
+                }
+            }
+        };
+
+        // Create the 3D plot
+        Plotly.newPlot('plot', data, layout);
+
+        function PES(x, y, K, F, G, t) {
+            var rho = Math.sqrt(x ** 2 + y ** 2);
+            var phi = Math.atan(y / x);
+            return 1 / 2 * K * rho ** 2 - rho * Math.sqrt(F ** 2 + G ** 2 * rho ** 2 + 2 * F * G * rho * Math.cos(3 * phi));
+        }
+
+        function generate_surface(xyMesh, K, F, G) {
+            const data = [];
+            for (let i = 0; i < rows; i++) {
+                const E = [];
+                for (let j = 0; j < cols; j++) {
+                    const [x, y] = xyMesh[i][j];
+                    const e = PES(x, y, K, F, G);
+                    E.push(e);
+                }
+                data.push(E);
+            }
+            return data;
+        }
+    </script>
 </body>
+
 </html>
