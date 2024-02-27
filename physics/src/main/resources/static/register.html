@@ -43,8 +43,9 @@
 </head>
 <body>
     <div id="registrationForm">
-        <h1>Register Account</h1>
-        <form id="userRegistrationForm" onsubmit="submitForm(event)">
+        <h1>Register New Student</h1>
+<!--        <form id="userRegistrationForm" onsubmit="submitForm(event)">-->
+        <form id="userRegistrationForm" action="/register" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" class="form-control" required>
@@ -60,10 +61,10 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary" onclick="registerUser()">Register</button>
         </form>
     </div>
-
+    <div id="messageContainer"></div>
     <!-- Include Bootstrap JS (you may need to download and host it locally or use a CDN) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -97,6 +98,60 @@
                 alert('This is not a valid UCSC email so you do not have access to this website.');
                 //alert('Registration successful!');
             }
+        }
+
+        function registerUser() {
+            // perform action on form with id "userRegistrationForm"
+            const form = document.getElementById("userRegistrationForm");
+
+            // Add an event listener for form submission
+            form.addEventListener("submit", async (event) => {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+
+                // Get the form data
+                const formData = new FormData(form);
+
+                // Convert form data to JSON
+                const jsonObject = {};
+                formData.forEach((value, key) => {
+                    jsonObject[key] = value;
+                });
+
+                // Make a POST request to the backend
+                try {
+                    const response = await fetch("/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(jsonObject)
+                    });
+
+                    // Check if the request was successful
+                    // Get a reference to an element where you want to display the message
+                    const messageContainer = document.getElementById("messageContainer");
+
+                    // Check if the request was successful
+                    if (response.ok) {
+                        // Handle successful registration
+                        messageContainer.textContent = "User registered successfully";
+                        messageContainer.style.color = "green";
+                        messageContainer.style.textAlign = "center";
+                        messageContainer.style.marginTop = "20px";
+                    } else {
+                        // Handle registration failure
+                        messageContainer.textContent = "Failed to register user";
+                        messageContainer.style.color = "red";
+                        messageContainer.style.textAlign = "center";
+                        messageContainer.style.marginTop = "20px";
+                    }
+                } catch (error) {
+                    // Handle network or other errors
+                    console.error("Error:", error);
+                }
+            });
+
         }
     </script>
 </body>
