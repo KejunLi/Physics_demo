@@ -32,8 +32,10 @@ public class StudentController {
             JsonNode jsonNode = objectMapper.readTree(requestBody);
             String email = jsonNode.get("email").asText();
             String password = jsonNode.get("password").asText();
+            String studentId = jsonNode.get("studentId").asText();
             student.setEmail(email);
             student.setPassword(password);
+            student.setStudentId(studentId);
             studentService.registerStudent(student);
             System.out.println("StudentController - Student registered successfully!");
             return ResponseEntity.status(HttpStatus.OK).body("Student registered successfully!" + student);
