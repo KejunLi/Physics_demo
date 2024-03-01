@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -21,6 +22,10 @@ public class StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
+    public Optional<Student> findByEmail(String email) {
+        return studentRepository.findByEmail(email);
+    }
+
     @Transactional
     public Student registerStudent(Student student) {
         System.out.println("StudentService - new student email " + student.getEmail());
@@ -30,4 +35,6 @@ public class StudentService {
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
+
+    
 }
