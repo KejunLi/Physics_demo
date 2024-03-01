@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +40,7 @@
             margin-top: 0;
             text-align: center;
         }
-        .login-form input[type="text"],
+        .login-form input[type="email"],
         .login-form input[type="password"],
         .login-form input[type="submit"] {
             width: 100%;
@@ -95,10 +95,10 @@
     <!-- Login section -->
     <div class="login-form">
         <h2>Log in to take quiz</h2>
-        <form id="loginForm" form action="/login" method="post">
-            <input type="text" name="username" placeholder="Username" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
-            <input type="submit" value="Login">
+        <form id="loginForm" action="/login" method="post">
+            <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required><br>
+            <input type="submit" value="Login"  onclick="loginUser()">
         </form>
         <a href="register.html">Register (UCSC students only)</a>
         <br>
@@ -107,7 +107,6 @@
 
     </div>
 </div>
-
 <!-- Lesson lists -->
 <div class="lesson-list">
     <!-- First lesson list -->
@@ -117,11 +116,11 @@
     </div>
     <div class="lesson" onclick="window.location.href='lesson2.html'">
         <h3>Lesson 2</h3>
-        <p>Description of Lesson 2.</p>
+        <p>Introduction to Kinematics</p>
     </div>
     <div class="lesson" onclick="window.location.href='lesson3.html'">
         <h3>Lesson 3</h3>
-        <p>Description of Lesson 3.</p>
+        <p>Harmonic Oscillator</p>
     </div>
     <div class="lesson" onclick="window.location.href='lesson4.html'">
         <h3>Lesson 4</h3>
@@ -129,43 +128,77 @@
     </div>
     <div class="lesson" onclick="window.location.href='lesson5.html'">
         <h3>Lesson 5</h3>
-        <p>Description of Lesson 5.</p>
+        <p>Introduction to Measurement and Uncertainty</p>
     </div>
     <div class="lesson" onclick="window.location.href='lesson6.html'">
         <h3>Lesson 6</h3>
         <p>Description of Lesson 6.</p>
     </div>
     <div class="lesson" onclick="window.location.href='additional_lesson.html'">
-        <h3>Lesson 6</h3>
-        <p>Description of Lesson 6.</p>
+        <h3>Lesson 7</h3>
+        <p>Description of Lesson 7.</p>
     </div>
 </div>
 
 </body>
 
-
+<div id="messageContainer"></div>
 <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    function loginUser() {
+            // perform action on form with id "loginForm"
+            const form = document.getElementById("loginForm");
 
-        // Get the form data
-        const formData = new FormData(this);
+            // Add an event listener for form submission
+            form.addEventListener("submit", async (event) => {
+                // Prevent the default form submission behavior
+                event.preventDefault();
 
-        // Send a POST request to the server
-        fetch("/login", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                // If the response status is not OK, display an alert
-                throw new Error("You are visiting this site outside of class hours. Please check back during class hours for access.");
-            }
-        })
-        .catch(error => {
-            // Display an alert with the error message
-            alert("You are visiting this site outside of class hours. Please check back during class hours for access.");
-        });
-    });
+                // Get the form data
+                const formData = new FormData(form);
+
+                // Convert form data to JSON
+                const jsonObject = {};
+                formData.forEach((value, key) => {
+                    jsonObject[key] = value;
+                });
+
+                console.log("jsonObject:", jsonObject);
+
+                // Make a POST request to the backend
+                try {
+                    const response = await fetch("/login", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(jsonObject)
+                    });
+
+                    // Check if the request was successful
+                    // Get a reference to an element where you want to display the message
+                    const messageContainer = document.getElementById("messageContainer");
+
+                    // Check if the request was successful
+                    if (response.ok) {
+                        // Handle successful registration
+                        messageContainer.textContent = "User logged in successfully";
+                        messageContainer.style.color = "green";
+                        messageContainer.style.textAlign = "center";
+                        messageContainer.style.marginTop = "20px";
+                        window.location.href = 'profile.html';
+                    } else {
+                        // Handle registration failure
+                        messageContainer.textContent = "Failed to login user";
+                        messageContainer.style.color = "red";
+                        messageContainer.style.textAlign = "center";
+                        messageContainer.style.marginTop = "20px";
+                        throw new Error("You are visiting this site outside of class hours. Please check back during class hours for access.");
+                    }
+                } catch (error) {
+                    // Handle network or other errors
+                    console.error("Error:", error);
+                }
+            });
+        }
 </script>
 </html>

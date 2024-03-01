@@ -1,6 +1,5 @@
 package edu.ucsc.physics;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -59,7 +60,7 @@ public class StudentController {
     // }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody String requestBody, Model model) {
+    public ResponseEntity<String> login(@RequestBody String requestBody, HttpServletRequest request, Model model) {
         System.out.println("StudentController - start logging in.");
         try {
             // Parse the JSON request body
@@ -73,18 +74,32 @@ public class StudentController {
             Optional<Student> optionalStudent = studentService.findByEmail(email);
             Student student = optionalStudent.get();
             if (student != null && student.getPassword().equals(password)) {
-                model.addAttribute("email", student.getEmail());
+                // Save the email to the session
+                HttpSession session = request.getSession();
+                session.setAttribute("email", email);
+                model.addAttribute("email", email);
                 System.out.println(ResponseEntity.status(HttpStatus.OK).body("Student logged in successfully!" + student));
                 
-                return ResponseEntity.status(HttpStatus.OK).body("Student logged in successfully!" + student);
+                return ResponseEntity.status(HttpStatus.OK).body("Student with email " + email + "is logged in successfully!");
             } else {
-                System.out.println("StudentController - failed to logging student");
-                model.addAttribute("error", "Invalid credentials");
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to log in student: ");
+                System.out.println("StudentController - failed to logging student: invalid credentials");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to log in student: invalid credentials");
             }
         } catch (Exception e) {
             System.out.println("StudentController - Failed to log in student!");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to log in student: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/verifySession")
+    public String verifySession(HttpSession session) {
+        // Retrieve the email attribute from the session
+        String email = (String) session.getAttribute("email");
+        // Check if the email attribute is not null
+        if (email != null) {
+            return "Session is set with email: " + email;
+        } else {
+            return "Session is not set or email attribute is null";
         }
     }
 }
