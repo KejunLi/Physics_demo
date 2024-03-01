@@ -1,16 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>Login Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        p {
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .welcome-msg {
+            font-size: 18px;
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        .quiz-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Welcome, <span th:text="${username}"></span>!</h2>
-
-    <!-- Add your profile content here -->
+    <div class="container">
+        <h1>Welcome Back!</h1>
+        <p>Your login was successful.</p>
+        <div id="welcome-msg" class="welcome-msg"></div>
+        <a href="index.html" class="quiz-btn">Go to Home Page</a>
+        <a href="quiz1.html" class="quiz-btn">Go to Quiz</a>
+    </div>
 </body>
 
 </html>

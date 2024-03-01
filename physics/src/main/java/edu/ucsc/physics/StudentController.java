@@ -11,12 +11,16 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
+@SessionAttributes("email")
 public class StudentController {
 
     private final StudentService studentService;
@@ -49,10 +53,10 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
-    }
+    // @GetMapping("/login")
+    // public String showLoginForm() {
+    //     return "login";
+    // }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody String requestBody, Model model) {
@@ -60,7 +64,7 @@ public class StudentController {
         try {
             // Parse the JSON request body
             JsonNode jsonNode = objectMapper.readTree(requestBody);
-            System.out.println("StudentController - parsing JSON.");
+            System.out.println("StudentController - parsed JSON.");
             String email = jsonNode.get("email").asText();
             System.out.println("StudentController - parsed email");
             String password = jsonNode.get("password").asText();
@@ -69,11 +73,9 @@ public class StudentController {
             Optional<Student> optionalStudent = studentService.findByEmail(email);
             Student student = optionalStudent.get();
             if (student != null && student.getPassword().equals(password)) {
-                System.out.println("StudentController - " + student.getEmail());
-                System.out.println("StudentController - " + student.getPassword());
-                System.out.println("StudentController - " + email);
-                model.addAttribute("username", email);
+                model.addAttribute("email", student.getEmail());
                 System.out.println(ResponseEntity.status(HttpStatus.OK).body("Student logged in successfully!" + student));
+                
                 return ResponseEntity.status(HttpStatus.OK).body("Student logged in successfully!" + student);
             } else {
                 System.out.println("StudentController - failed to logging student");
@@ -85,24 +87,4 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to log in student: " + e.getMessage());
         }
     }
-
-    // @PostMapping("/login") // RESTful endpoints which receive message from user request that will be read
-    // public String login(@RequestParam String email, @RequestParam String password, Model model) {
-    //     // Add your authentication logic here (e.g., check against a database)
-    //     if (authenticateUser(email, password)) {
-    //         model.addAttribute("username", email);
-    //         return "redirect:/profile";
-    //     } else {
-    //         model.addAttribute("error", "Invalid credentials");
-    //         return "login";
-    //     }
-    //     // For simplicity, let's assume any username/password is valid
-    //     if ("your_username".equals(username) && "your_password".equals(password)) {
-    //        model.addAttribute("username", username);
-    //        return "redirect:/profile";
-    //     } else {
-    //        model.addAttribute("error", "Invalid username or password");
-    //        return "login";
-    //     }
-    //}
 }

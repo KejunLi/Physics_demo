@@ -40,7 +40,7 @@
             margin-top: 0;
             text-align: center;
         }
-        .login-form input[type="text"],
+        .login-form input[type="email"],
         .login-form input[type="password"],
         .login-form input[type="submit"] {
             width: 100%;
@@ -95,9 +95,9 @@
     <!-- Login section -->
     <div class="login-form">
         <h2>Log in to take quiz</h2>
-        <form id="loginForm" form action="/login" method="post">
-            <input type="email" name="email" placeholder="email" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
+        <form id="loginForm" action="/login" method="post">
+            <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required><br>
             <input type="submit" value="Login"  onclick="loginUser()">
         </form>
         <a href="register.html">Register (UCSC students only)</a>
@@ -143,7 +143,7 @@
 
 </body>
 
-
+<div id="messageContainer"></div>
 <script>
     function loginUser() {
             // perform action on form with id "loginForm"
@@ -162,6 +162,8 @@
                 formData.forEach((value, key) => {
                     jsonObject[key] = value;
                 });
+
+                console.log("jsonObject:", jsonObject);
 
                 // Make a POST request to the backend
                 try {
@@ -184,7 +186,7 @@
                         messageContainer.style.color = "green";
                         messageContainer.style.textAlign = "center";
                         messageContainer.style.marginTop = "20px";
-                        window.location.href = '/success-login-page.html';
+                        window.location.href = 'profile.html';
                     } else {
                         // Handle registration failure
                         messageContainer.textContent = "Failed to login user";
@@ -198,7 +200,6 @@
                     console.error("Error:", error);
                 }
             });
-
         }
 </script>
 </html>
